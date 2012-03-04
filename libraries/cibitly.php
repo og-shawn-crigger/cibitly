@@ -11,8 +11,8 @@
  * @author        	 Shawn Crigger <@svizion>
  * @created			      03/01/12
  * @license         http://philsturgeon.co.uk/code/dbad-license
- * @link												http://getsparks.org/packages/cibitly/show
 	* @link            http://s-vizion.com
+ * @link												http://getsparks.org/packages/cibitly/show
  */
 class cibitly {
 
