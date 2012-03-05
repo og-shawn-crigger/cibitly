@@ -72,7 +72,7 @@ class cibitly {
 				$bitly_url = $this->bitly_url . 'shorten?' . $this->login . '&uri='.urlencode($url).'&format='.$format;
 				$bitly_url = $this->curl_get_result($bitly_url);
 
-				$qr_code   = $this->curl_get_result($bitly_url . '.qrcode');
+				$qr_code   = $bitly_url . '.qrcode';
 
 
 				return json_encode( array('url' => $bitly_url, 'qr_code' => $qr_code ) );
