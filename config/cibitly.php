@@ -4,7 +4,7 @@
 $config['bitly_url'] = 'http://api.bit.ly/v3/';
 
 # Your login bit.ly login id
-$config['login'] = 'http://api.twitter.com/1/';
+$config['login'] = 'yourloginid';
 
 # Your login bit.ly api key
-$config['apikey'] = 'http://api.twitter.com/1/';
+$config['apikey'] = 'yourapikey';
