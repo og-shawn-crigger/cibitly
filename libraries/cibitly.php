@@ -10,9 +10,9 @@
  * @category    	   Libraries
  * @author        	 Shawn Crigger <@svizion>
  * @created			      03/01/12
- * @license         http://philsturgeon.co.uk/code/dbad-license
 	* @link            http://s-vizion.com
  * @link												http://getsparks.org/packages/cibitly/show
+ * @license         http://philsturgeon.co.uk/code/dbad-license
  */
 class cibitly {
 
@@ -34,9 +34,9 @@ class cibitly {
 				if ( count ( $config ) == 0 )
 						return false;
 
-				$this->bitly_url = 'http://api.bit.ly/v3/';
+				$this->bitly_url = ( array_key_exists('bitly_url', $config) && $config['bitly_url'] != '' ) ? $config['bitly_url'] : 'http://api.bit.ly/v3/';
 
-				$this->login = 'login=' . $config['login'] . '&amp;apiKey=' . $config['apikey'];
+				$this->login = 'login=' . $config['login'] . '&apiKey=' . $config['apikey'];
 
 		}
 
@@ -52,8 +52,30 @@ class cibitly {
 		 */
 		public function get_short_url ( $url, $format='txt' )
 		{
-				$bitly_url = $this->bitly_url . 'shorten?' . $this->login . '&amp;uri='.urlencode($url).'&amp;format='.$format;
+				$bitly_url = $this->bitly_url . 'shorten?' . $this->login . '&uri='.urlencode($url).'&format='.$format;
+
 				return $this->curl_get_result($bitly_url);
+		}
+
+		/**
+		 * Returns shortened URL and QR-Code using Bit.ly's Service.
+		 *
+		 * @access public
+		 * @param		string		$url 	     The URL to shorten
+		 * @param  string  $format    The Optional Return Format, values include 'xml', 'json' and 'txt'
+		 *
+		 * return  string  JSON encoded Bit.ly shortened url and qr-code
+		 *
+		 */
+		public function get_short_qrcode ( $url, $format='txt' )
+		{
+				$bitly_url = $this->bitly_url . 'shorten?' . $this->login . '&uri='.urlencode($url).'&format='.$format;
+				$bitly_url = $this->curl_get_result($bitly_url);
+
+				$qr_code   = $this->curl_get_result($bitly_url . '.qrcode');
+
+
+				return json_encode( array('url' => $bitly_url, 'qr_code' => $qr_code ) );
 		}
 
 		/**
@@ -68,25 +90,25 @@ class cibitly {
 		 */
 		public function get_long_url ( $url, $login, $appkey, $format='txt' )
 		{
-				$bitly_url = $this->bitly_url . 'expand?' . $this->login . '&amp;shortUrl='.urlencode($url).'&amp;format='.$format;
+				$bitly_url = $this->bitly_url . 'expand?' . $this->login . '&shortUrl='.urlencode($url).'&format='.$format;
 				return $this->curl_get_result($bitly_url);
 		}
 
 
-		private function curl_get_result( $url = '' ) 
+		private function curl_get_result( $url = '' )
 		{
 				if ( trim ( $url ) == '' )
 						return '';
 
 				$ch      = curl_init();
-				$timeout = 5;
+				$timeout = 10;
 				curl_setopt($ch,CURLOPT_URL,$url);
 				curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
 				curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
 				$data    = curl_exec($ch);
 				curl_close($ch);
 				return $data;
-		
+
 		}
 
 
