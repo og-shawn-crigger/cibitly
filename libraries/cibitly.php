@@ -20,6 +20,15 @@ class cibitly {
 		private $login;
 
 
+		public function __construct( )
+		{
+				$this->bitly_url = 'http://api.bit.ly/v3/';
+
+				//$this->login = 'login=' . $config['login'] . '&amp;apiKey=' . $config['apikey'];
+				//echo $this->login;
+
+		}
+
 		/**
 		 * Constructor method for this small class, please pass login and apikey into class through config array.
 		 *
@@ -29,14 +38,15 @@ class cibitly {
 		 *                         )
 		 *
 		 */
-		public function __construct( $config = array() )
+		public function initialize ( $config = array() )
 		{
+
 				if ( count ( $config ) == 0 )
 						return false;
 
-				$this->bitly_url = ( array_key_exists('bitly_url', $config) && $config['bitly_url'] != '' ) ? $config['bitly_url'] : 'http://api.bit.ly/v3/';
+				$this->bitly_url = 'http://api.bit.ly/v3/';
 
-				$this->login = 'login=' . $config['login'] . '&apiKey=' . $config['apikey'];
+				$this->login = 'login=' . $config['login'] . '&amp;apiKey=' . $config['apikey'];
 
 		}
 
@@ -88,13 +98,22 @@ class cibitly {
 		 * return  string  Bit.ly expanded url
 		 *
 		 */
-		public function get_long_url ( $url, $login, $appkey, $format='txt' )
+		public function get_long_url ( $url, $format='txt' )
 		{
 				$bitly_url = $this->bitly_url . 'expand?' . $this->login . '&shortUrl='.urlencode($url).'&format='.$format;
 				return $this->curl_get_result($bitly_url);
 		}
 
 
+		/**
+		 * Simple curl get result method, needs to be expanded on but this was just a quick short project I needed.
+		 *
+		 * @access private
+		 * @param		string		$url 	     The URL to get the results from
+		 *
+		 * return  string
+		 *
+		 */
 		private function curl_get_result( $url = '' )
 		{
 				if ( trim ( $url ) == '' )
@@ -102,13 +121,16 @@ class cibitly {
 
 				$ch      = curl_init();
 				$timeout = 10;
-				curl_setopt($ch,CURLOPT_URL,$url);
-				curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-				curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
-				$data    = curl_exec($ch);
-				curl_close($ch);
-				return $data;
 
+				curl_setopt( $ch, CURLOPT_URL, $url );
+				curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
+				curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, $timeout );
+
+				$data    = curl_exec ( $ch );
+
+				curl_close ( $ch );
+
+				return $data;
 		}
 
 
