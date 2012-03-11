@@ -61,9 +61,9 @@ class cibitly {
 	 */
 	public function get_short_url ( $url, $format='txt' )
 	{
-		$bitly_url = $this->bitly_url . 'shorten?' . $this->login . '&amp;uri='.urlencode($url).'&amp;format='.$format;
-
-		return $this->curl_get_result($bitly_url);
+			$bitly_url = $this->bitly_url . 'shorten?' . $this->login . '&amp;uri='.urlencode($url).'&amp;format='.$format;
+echo $bitly_url;
+			return $this->curl_get_result($bitly_url);
 	}
 
 	/**
@@ -78,31 +78,24 @@ class cibitly {
 	 */
 	public function get_long_url ( $url, $login, $appkey, $format='txt' )
 	{
-		$bitly_url = $this->bitly_url . 'expand?' . $this->login . '&amp;shortUrl='.urlencode($url).'&amp;format='.$format;
-		return $this->curl_get_result($bitly_url);
+			$bitly_url = $this->bitly_url . 'expand?' . $this->login . '&amp;shortUrl='.urlencode($url).'&amp;format='.$format;
+			return $this->curl_get_result($bitly_url);
 	}
 
-	/**
-	 * Returns curl response for request to Bit.ly, maybe later will add fallback method.
-	 *
-	 * @access private
+
 	private function curl_get_result( $url = '' )
 	{
-		if ( trim ( $url ) == '' )
-				return '';
+			if ( trim ( $url ) == '' )
+					return '';
 
-		$ch      = curl_init();
-		$timeout = 5;
-
-		curl_setopt($ch,CURLOPT_URL,$url);
-		curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-		curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
-
-		$data    = curl_exec($ch);
-
-		curl_close($ch);
-
-		return $data;
+			$ch      = curl_init();
+			$timeout = 5;
+			curl_setopt($ch,CURLOPT_URL,$url);
+			curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
+			$data    = curl_exec($ch);
+			curl_close($ch);
+			return $data;
 
 	}
 
