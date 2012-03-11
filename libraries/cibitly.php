@@ -39,14 +39,7 @@ class cibitly {
 
 	public function initialize ( $config = array() )
 	{
-
-			if ( count ( $config ) == 0 )
-					return false;
-
 			$this->bitly_url = 'http://api.bit.ly/v3/';
-
-			$this->login = 'login=' . $config['login'] . '&amp;apiKey=' . $config['apikey'];
-
 	}
 
 	/**
@@ -76,7 +69,7 @@ class cibitly {
 	 * return  string  Bit.ly expanded url
 	 *
 	 */
-	public function get_long_url ( $url, $login, $appkey, $format='txt' )
+	public function get_long_url ( $url, $format='txt' )
 	{
 		$bitly_url = $this->bitly_url . 'expand?' . $this->login . '&amp;shortUrl='.urlencode($url).'&amp;format='.$format;
 		return $this->curl_get_result($bitly_url);
@@ -86,6 +79,8 @@ class cibitly {
 	 * Returns curl response for request to Bit.ly, maybe later will add fallback method.
 	 *
 	 * @access private
+	 *
+	 */
 	private function curl_get_result( $url = '' )
 	{
 		if ( trim ( $url ) == '' )
