@@ -1,5 +1,0 @@
-<?php
-
-//$autoload['config'] = array('cibitly');
-
-$autoload['libraries'] = array('ci_bitly');
