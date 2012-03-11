@@ -22,7 +22,8 @@ Setup your Login and API Key in the config file.
 Usage Instructions Shorta
 ===========================================
 
-`PHP
+```PHP
+
 <?php
 	/**
 	 * Simple short method of using this.
@@ -50,5 +51,6 @@ Usage Instructions Shorta
 		echo "Short URL : {$short} <br /> Long URL : ' , $long;
 
 	}
+
 `
 
