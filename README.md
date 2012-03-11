@@ -1,4 +1,4 @@
-Simple Bit.ly API Interface for CodeIgniter, First commit (whoop)
+Simple Bit.ly API Interface for CodeIgniter -> Still trying to figure out get tags sorry for any errors.
 ===========================================
 
 NOTES
@@ -19,14 +19,34 @@ If you already have an Bit.ly account, you can find your apiKey at: [http://bitl
 Setup your Login and API Key in the config file.
 
 
-To Expand a URL 
+Usage Instructions Shorta
 ===========================================
+```PHP
+	/**
+	 * Simple short method of using this.
+	 *
+	 */
+	public function index()
+	{
+		// Load the rest client spark
+		$this->load->spark('ci-bitly/0.0.3');
 
-	$original_url = $this->input->post('url');
-	$short_url    = $this->bitly->get_short_url ( $original_url )
 
-To Expand a URL 
-===========================================
+		$config = array('login'  => 'loginname','apikey' => 'yourapi');
 
-	$original_url = $this->input->post('url');
-	$long_url     = $this->bitly->get_long_url ( $original_url )
+		//This works as a library also if your not into the sparks thing.
+		//$this->load->library('cibitly');
+
+		// Run some setup
+		$this->cibitly->initialize( $config );
+
+		$url = 'http://blog.s-vizion.com/';
+
+		$short = $this->cibitly->get_short_url ( $url );
+		$long  = $this->cibitly->get_long_url ( $short );
+
+		echo "Short URL : {$short} <br /> Long URL : ' , $long;
+
+	}
+
+
